@@ -1,4 +1,3 @@
-Zo‘r tushundim. Quyida seni “**Forge**” loyihang uchun **to‘liq startup hujjati (docs)** shaklida mazmunli va aniq tarzda yozdim. Bu versiyani istalgan pitch, grant, yoki MVP-sahifada bemalol ishlatishing mumkin. 👇
 
 ---
 
@@ -79,4 +78,3 @@ Zo‘r tushundim. Quyida seni “**Forge**” loyihang uchun **to‘liq startup 
 
 ---
 
-Agar xohlasang, bu hujjatni PDF, Word yoki `README.md` shaklida qilib beraman. Qanday formatda kerak?
