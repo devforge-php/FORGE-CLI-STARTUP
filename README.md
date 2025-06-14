@@ -1,4 +1,3 @@
-Zo‘r! Endi loyihang ancha aniqlashdi. Keling, bu **Forge CLI** loyihasining \*\*texnik topshiriq (TZ / Technical Specification)\*\*sini yozib beraman — xuddi sen professional darajada o‘z jamoangga, yoki o‘zing kelajakda o‘qib ishlay oladigan qilib.
 
 ---
 
@@ -128,7 +127,4 @@ Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturc
 
 ---
 
-Xohlaysanmi, keyingi qadamda bu loyihani GitHub reposiga mos `README.md` + `composer create` bo‘yicha boshlang‘ich fayllarni ham yozib beraman?
-
-Yoki to‘g‘ridan-to‘g‘ri `forge branch` buyrug‘ining Laravel Zero kodi kerakmi?
 
