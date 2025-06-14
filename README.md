@@ -1,171 +1,134 @@
+Zo‘r! Endi loyihang ancha aniqlashdi. Keling, bu **Forge CLI** loyihasining \*\*texnik topshiriq (TZ / Technical Specification)\*\*sini yozib beraman — xuddi sen professional darajada o‘z jamoangga, yoki o‘zing kelajakda o‘qib ishlay oladigan qilib.
 
 ---
 
-## ✅ Loyiha nomi (ishchi nom):
+# 🧾 TEXNIK TOPSHIRIQ (TZ)
 
-**Forge CLI** — Laravel serverlar uchun Git-falsafasiga asoslangan boshqaruv vositasi
+## 📌 Loyiha nomi:
 
----
-
-## 🧑‍💻 Kimlar uchun:
-
-* Laravel backend dasturchilar
-* Laravel jamoalarda (team) ishlovchi developerlar
-* VPS serverlarda ishlaydigan fullstacklar
-* Laravel loyihasini deploy qilmoqchi bo‘lgan o‘quvchilar / juniorlar
-* DevOps va Laravelni birlashtirmoqchi bo‘lgan kompaniyalar
+**Forge CLI** — VPS serverda dasturchilar uchun branch asosida mustaqil sandbox yaratadigan CLI vosita.
 
 ---
 
 ## 🎯 Loyihaning asosiy maqsadi:
 
-Laravel developerlar uchun **Docker’siz**, **bash’siz**, **manual konfiguratsiyasiz** tarzda VPS serverga Laravel loyihani o‘rnatish, boshqarish va rivojlantirishni **CLI buyruqlar** orqali soddalashtirish.
+Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturchilar uchun VPS serverda **Docker’siz**, **virtualizatsiyasiz** va **DevOps’siz** mustaqil muhitda ishlash imkoniyatini berish.
 
 ---
 
-## ❌ Yechiladigan muammolar:
+## 👥 Maqsadli auditoriya:
 
-| Muammo                                                            | Yechim                                                                  |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| VPS serverga Laravel loyihani qo‘lda o‘rnatish — uzoq va chalkash | `forge init` bilan Laravel + PHP + MySQL + Nginx avtomatik o‘rnatiladi  |
-| Bir nechta dasturchi bir serverda ishlay olmaydi                  | Har bir dasturchiga `forge branch` orqali alohida muhit                 |
-| Server konfiguratsiyasi noto‘g‘ri sozlansa rollback yo‘q          | `forge commit`, `forge rollback` bu muammoni hal qiladi                 |
-| Docker o‘rganish majburiyligi                                     | Docker kerakmas, oddiy `.env`, `.conf` fayllar asosida                  |
-| Dasturchi noto‘g‘ri konfiguratsiya qilsa hamma uchun buziladi     | Har bir branch izolyatsiyalangan — izolyatsiya Git falsafasiga o‘xshash |
+* Middle / Senior backend developerlar
+* Junior developerlar (xavfsiz sandboxda ishlashi uchun)
+* DevOps engineer’lar (oddiy test muhitlarini ajratish uchun)
+* Team lead’lar (yangi ishga kelganlarga xavfsiz joy berish uchun)
 
 ---
 
-## ⚙️ Asosiy funksiyalar rejasi:
+## 🔑 Asosiy konsepsiya:
 
-### 🔧 `forge init`
-
-> VPS serverda kerakli hamma narsani o‘rnatadi:
-
-* PHP, MySQL/PostgreSQL, Composer, Nginx, Laravel
-* Laravel loyihasi yaratadi yoki GitHub’dan klon qiladi
-* `.env`, `nginx.conf` avtomatik yaratiladi
-
----
-
-### 🌿 `forge branch <ism>`
-
-> Har bir developer o‘ziga alohida test muhitini yaratadi
-
-* Laravel loyihasi kloni yaratiladi
-* Alohida `.env` fayl
-* Alohida `nginx` port (masalan: `8001`, `8002`, ...)
-* Branch katalog nomi: `forge_branch_ism`
+* Har bir developer `forge branch <name>` buyrug‘i orqali o‘zining izolyatsiyalangan ish joyini yaratadi.
+* Har bir branch faqat **1 ta katalog** va unga tegishli **snapshot**lardan iborat.
+* Hech qanday Laravel, PHP, nginx, MySQL avtomatik o‘rnatilmaydi.
+* Har bir branchdagi o‘zgarishlar `forge commit` bilan snapshot qilinadi.
+* VPS serverga zarar yetkazmaslik uchun `forge destroy` bilan branch tozalab tashlanadi.
+* Bu Git falsafasiga o‘xshaydi, lekin bu CLI darajasida, **operatsion tizim muhitida branchlash** hisoblanadi.
 
 ---
 
-### 💾 `forge commit`
+## 🧱 Arxitektura:
 
-> O‘z branch’ida qilgan ishlarni saqlaydi
-
-* Konfiguratsiya, `.env`, nginx sozlamalarini snapshot qiladi
-* Agar branch ishlamasa, `rollback` qilish mumkin
-
----
-
-### 🔙 `forge rollback`
-
-> So‘nggi `commit`ga qaytish
-
-* Server konfiguratsiyasi, `.env` qayta tiklanadi
-
----
-
-### 🔁 `forge merge <branch>`
-
-> Branch ichidagi o‘zgarishlarni `main` muhitga qo‘shish
-
-* Testdan o‘tgan so‘nggina merge bo‘ladi
-
----
-
-### 🗑️ `forge destroy <branch>`
-
-> Branch’ni o‘chiradi, agar kerak bo‘lmasa
-
----
-
-### 📦 `forge deploy`
-
-> Hozirgi holatni production VPS’ga deploy qiladi
-
----
-
-### 🔐 `forge ssh`
-
-> Branch ichiga terminal orqali kira olish
-
----
-
-### ⚙️ `forge config:set <key> <value>`
-
-> `.env` va `nginx.conf` sozlamalarini branch asosida o‘zgartirish
-
----
-
-## 🧠 Yordamchi buyruqlar (keyinchalik qo‘shiladi):
-
-* `forge list` — barcha branchlar ro‘yxati
-* `forge status` — joriy branch holati
-* `forge logs` — branch log fayllari
-* `forge pull <repo>` — Laravel loyihani GitHub’dan olish
-* `forge install <package>` — branch ichiga Laravel package o‘rnatish
-
----
-
-## 📦 Texnologiyalar:
-
-| Texnologiya          | Vazifasi                                           |
-| -------------------- | -------------------------------------------------- |
-| **Laravel Zero**     | CLI tuzish uchun framework                         |
-| **PHP**              | CLI logika va Laravel integratsiya                 |
-| **SSH**              | VPS ulanish va fayl uzatish                        |
-| **Bash**             | Fayl va konfiguratsiya o‘zgarishlari               |
-| **Nginx**            | Har bir branch uchun port orqali server sozlash    |
-| **MySQL/PostgreSQL** | Ma’lumotlar bazasi (har branch uchun prefiksli DB) |
-
----
-
-## 📄 GitHub README uchun tayyor matn (soddalashtirilgan):
-
-```markdown
-# Forge CLI 🔥
-
-Laravel developerlar uchun VPS server boshqaruv vositasi. Har bir developer o‘z branch'ida mustaqil ishlaydi. Git falsafasiga o‘xshash CLI.
-
-## 🔧 O‘rnatish
-```
-
-composer global require username/forge-cli
+### 📂 Katalog struktura:
 
 ```
-
-## ⚙️ Asosiy buyruqlar
-
-| Buyruq | Maqsadi |
-|--------|---------|
-| `forge init` | Laravel serverni to‘liq sozlash |
-| `forge branch ali` | `ali` ismli branch ochish |
-| `forge commit` | Konfiguratsiyani saqlash |
-| `forge rollback` | So‘nggi sozlamaga qaytish |
-| `forge merge ali` | `ali` branch’ni asosiyga qo‘shish |
-| `forge destroy ali` | Branch’ni o‘chirish |
-| `forge deploy` | Productionga chiqarish |
-| `forge ssh` | Branch terminaliga kirish |
-
-## 🧠 Nega kerak?
-
-- VPS'da tez Laravel deploy
-- Har dasturchiga mustaqil muhit
-- Rollback, commit, merge – Git falsafasida
-- Docker'siz server boshqaruvi
-
-## 🧱 Litsenziya
-MIT License
+/home/forge/
+├── forge_branch_ali/
+├── forge_branch_sardor/
+└── .forge_snapshots/
+    ├── forge_branch_ali_2025-06-14_12-00.zip
+    └── forge_branch_sardor_2025-06-14_13-30.zip
 ```
 
 ---
+
+### ⚙️ Buyruqlar funksionalligi:
+
+#### ✅ `forge branch <name>`
+
+* Katalog yaratadi: `forge_branch_<name>`
+* Ichida hech nima avtomatik bo‘lmaydi
+
+#### ✅ `forge ssh <name>`
+
+* Terminal ichida `cd forge_branch_<name>` qiladi
+* (Kelajakda: chroot, port isolation qo‘shilishi mumkin)
+
+#### ✅ `forge commit`
+
+* Joriy branch holatini `.forge_snapshots/` katalogiga saqlaydi
+* `.zip`, `tar.gz`, yoki `rsync` bilan bajariladi
+
+#### ✅ `forge rollback`
+
+* Oxirgi snapshotni joriy branchga qaytaradi
+
+#### ✅ `forge destroy <name>`
+
+* Katalogni va snapshot’ni o‘chiradi
+
+#### ✅ `forge list`
+
+* Barcha mavjud branchlarni chiqaradi
+
+#### ✅ `forge status <name>`
+
+* Branch haqida meta ma'lumot: yaratilgan vaqt, commit soni, oxirgi snapshot
+
+---
+
+## 🧰 Texnologiyalar:
+
+| Texnologiya  | Izoh                          |
+| ------------ | ----------------------------- |
+| Laravel Zero | CLI framework sifatida        |
+| PHP 8+       | CLI logika                    |
+| Bash         | Fayl tizimi amallari          |
+| rsync / zip  | Snapshot yaratish va rollback |
+| JSON / Yaml  | Metadata saqlash uchun        |
+
+---
+
+## 🚀 Kelajakdagi imkoniyatlar (Optional):
+
+* Port izolatsiyasi (`8001`, `8002`, ...) — nginx conf bilan
+* `.forge.yml` — branchdagi sozlamalar uchun config fayl
+* `forge push` — branchdan remote VPS ga eksport
+* `forge merge` — boshqa branch bilan birlashtirish (manual merge)
+* `forge env` — umumiy `PATH`, `ALIAS`, `ENV` sozlamalarni saqlash
+
+---
+
+## 🛡️ Xavfsizlik:
+
+* Har bir branch **faqat o‘z hududi**da ishlaydi
+* Root/keng huquqlar kerak bo‘lsa ogohlantirish beriladi
+* Buzilgan branch butun tizimga ta’sir qilmaydi
+
+---
+
+## 📅 Bosqichma-bosqich reja:
+
+| Bosqich | Tavsif                                                   |
+| ------- | -------------------------------------------------------- |
+| 1       | `branch`, `destroy`, `list` komandalarini yozish         |
+| 2       | `commit`, `rollback` uchun snapshot mexanizmini qo‘shish |
+| 3       | `ssh`, `status` komandalarini yozish                     |
+| 4       | Snapshot arxivlash, log yozish                           |
+| 5       | `.forge.yml`, port izolatsiya, qo‘shimcha modullar       |
+
+---
+
+Xohlaysanmi, keyingi qadamda bu loyihani GitHub reposiga mos `README.md` + `composer create` bo‘yicha boshlang‘ich fayllarni ham yozib beraman?
+
+Yoki to‘g‘ridan-to‘g‘ri `forge branch` buyrug‘ining Laravel Zero kodi kerakmi?
+
