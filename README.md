@@ -11,7 +11,7 @@
 
 ## 🎯 Loyihaning asosiy maqsadi:
 
-Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturchilar uchun VPS serverda **Docker’siz**, **virtualizatsiyasiz** va **DevOps’siz** mustaqil muhitda ishlash imkoniyatini berish.
+Laravel, Node, Go, Python, Rust, yoki har qanday texnologiyada ishlovchi dasturchilar uchun VPS serverda git kabi ishlovchi tizim
 
 ---
 
